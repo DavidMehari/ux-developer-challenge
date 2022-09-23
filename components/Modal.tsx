@@ -6,19 +6,21 @@ type ModalProps = {
   title: String;
   modalOpen: Boolean;
   setModalOpen: Dispatch<SetStateAction<boolean>>;
+  refreshData: Function;
 };
 
-const Modal = ({ title, modalOpen, setModalOpen }: ModalProps) => {
-  const [formData, setFormData] = useState<any | null>({
-    id: Date.now(),
+const Modal = ({ title, modalOpen, setModalOpen, refreshData }: ModalProps) => {
+  const [formData, setFormData] = useState<ContactItem | null>({
     name: '',
     phone: '',
     email: '',
-    profilePic: '',
+    avatar: '',
   });
 
   const [image, setImage] = useState<File | null>(null);
-  const [createObjectURL, setCreateObjectURL] = useState<Blob | string>('/images/Default.png');
+  const [createObjectURL, setCreateObjectURL] = useState<Blob | string>(
+    '/images/Default.png'
+  );
 
   const uploadToClient = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -27,33 +29,23 @@ const Modal = ({ title, modalOpen, setModalOpen }: ModalProps) => {
       setImage(i);
       setCreateObjectURL(URL.createObjectURL(i));
 
-      setFormData((prev: any) => ({...prev, profilePic: i.name}))
+      setFormData((prev: any) => ({ ...prev, avatar: i.name }));
     }
   };
-
-  console.log(image);
-  console.log(createObjectURL);
-  
 
   const uploadToServer = async () => {
     const body = new FormData();
     if (image) {
-      body.append("file", image);
-      const response = await fetch("/api/upload-profile-pic", {
-        method: "POST",
-        body
+      body.append('file', image);
+      const response = await fetch('/api/upload-profile-pic', {
+        method: 'POST',
+        body,
       });
     }
   };
 
-  console.log('fomrdata', formData);
-
   const handleClose = () => {
     setModalOpen(false);
-  };
-
-  const handleModalAction = () => {
-    handleClose();
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,12 +58,38 @@ const Modal = ({ title, modalOpen, setModalOpen }: ModalProps) => {
     }));
   };
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault()
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-    await uploadToServer()
+    console.log('form submitted');
 
-  }
+    try {
+      await uploadToServer();
+      await saveContact(formData);
+    } catch (error) {
+      console.log(error);
+    }
+
+    const resetForm = event.target as HTMLFormElement;
+
+    setFormData(null);
+    setModalOpen(false);
+    refreshData();
+    resetForm.reset();
+  };
+
+  const saveContact = async (contact: any) => {
+    const response = await fetch('/api/contacts', {
+      method: 'POST',
+      body: JSON.stringify(contact),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    return await response.json();
+  };
 
   return (
     <>
@@ -91,13 +109,33 @@ const Modal = ({ title, modalOpen, setModalOpen }: ModalProps) => {
       >
         <h1 className="text-2xl font-semibold">{title}</h1>
         <div className="py-5 border-t border-b border-gray-300">
-          <form className="space-y-6">
-            
-
+          <form
+            id="add-contact-form"
+            className="space-y-6"
+            onSubmit={handleSubmit}
+          >
             <div className="flex items-center gap-2">
-              <Image src={`${createObjectURL}`} alt="profile pic preview" width={60} height={60} className="h-16 w-16 object-cover rounded-full"/>
-              <input type="file" className="hidden" id="profile" name="profile" onChange={uploadToClient} />
-              <label role="button" className="border-black border" htmlFor="profile">Select file</label>
+              <Image
+                src={`${createObjectURL}`}
+                alt="profile pic preview"
+                width={60}
+                height={60}
+                className="h-16 w-16 object-cover rounded-full"
+              />
+              <input
+                type="file"
+                className="hidden"
+                id="profile"
+                name="profile"
+                onChange={uploadToClient}
+              />
+              <label
+                role="button"
+                className="border-black border"
+                htmlFor="profile"
+              >
+                + Add picture
+              </label>
               <button>Del</button>
             </div>
 
@@ -115,7 +153,7 @@ const Modal = ({ title, modalOpen, setModalOpen }: ModalProps) => {
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 placeholder="Jamie Wright"
                 required
-                value={formData?.name}
+                value={formData?.name || ''}
                 onChange={handleChange}
               />
             </div>
@@ -133,7 +171,7 @@ const Modal = ({ title, modalOpen, setModalOpen }: ModalProps) => {
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 placeholder="+01 234 5678"
                 required
-                value={formData?.phone}
+                value={formData?.phone || ''}
                 onChange={handleChange}
               />
             </div>
@@ -151,7 +189,7 @@ const Modal = ({ title, modalOpen, setModalOpen }: ModalProps) => {
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 placeholder="jamie.wright@mail.com"
                 required
-                value={formData?.email}
+                value={formData?.email || ''}
                 onChange={handleChange}
               />
             </div>
@@ -167,8 +205,9 @@ const Modal = ({ title, modalOpen, setModalOpen }: ModalProps) => {
           </button>
           <button
             id="done"
+            form="add-contact-form"
+            type="submit"
             className="px-5 py-2 bg-indigo-500 hover:bg-indigo-700 text-white cursor-pointer rounded-md"
-            onClick={handleSubmit}
           >
             Done
           </button>

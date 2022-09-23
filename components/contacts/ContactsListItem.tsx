@@ -10,7 +10,7 @@ const ContactsListItem = ({contact}: ContactsListItemProps ) => {
     <li className="flex justify-between">
       <div id="contact-info" className="flex">
         <div id="contacts-avatar">
-          <Image src={`/images/${contact.profilePic}`} alt="prof" width={50} height={50} />
+          <Image src={`/images/${contact.avatar}`} alt="prof" width={50} height={50} />
         </div>
         <div id="contact-details">
           <h3 className="font-bold">{contact.name}</h3>

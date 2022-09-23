@@ -1,11 +1,17 @@
 import ContactsListItem from "./ContactsListItem"
+import { ContactItem } from "../../types/types";
+
+import db from "../../db.json"
 
 const ContactsList = () => {
+
+  console.log(db);
+  
   return (
     <div id="contact-list" className="max-w-screen-md w-screen mx-auto">
         <ul>
-          {[1, 2, 3].map(listItem => (
-            <ContactsListItem key={listItem}/>
+          {db.contactsData.map((contactItem: ContactItem) => (
+            <ContactsListItem key={contactItem.id} contact={contactItem}/>
           ))}
         </ul>
       </div>

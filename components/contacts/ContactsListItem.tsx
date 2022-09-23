@@ -1,13 +1,20 @@
-const ContactsListItem = () => {
+import Image from "next/image";
+import { ContactItem } from "../../types/types";
+
+type ContactsListItemProps = {
+  contact: ContactItem
+}
+
+const ContactsListItem = ({contact}: ContactsListItemProps ) => {
   return (
     <li className="flex justify-between">
       <div id="contact-info" className="flex">
         <div id="contacts-avatar">
-          <img src="../images/Jake.png" alt="prof" width={50} height={50} />
+          <Image src={`/images/${contact.profilePic}`} alt="prof" width={50} height={50} />
         </div>
         <div id="contact-details">
-          <h3>name</h3>
-          <p>+54856458612</p>
+          <h3 className="font-bold">{contact.name}</h3>
+          <p>{contact.phone}</p>
         </div>
       </div>
       <div id="contact-list-item-menu">

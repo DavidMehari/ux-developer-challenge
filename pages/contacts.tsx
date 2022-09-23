@@ -6,7 +6,6 @@ const Contacts: NextPage = () => {
   return (
     <>
       <ContactsHeader />
-
       <ContactsList />
     </>
   );

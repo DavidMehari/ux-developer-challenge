@@ -1,13 +1,14 @@
 import { useRouter } from "next/router";
-import { Dispatch, SetStateAction } from "react";
+import { useContext } from "react";
+import { ModalContext } from "../../state/context";
 
-type ContactHeaderProps = {
-  setModalOpen: Dispatch<SetStateAction<boolean>>
-}
 
-const ContactsHeader = ({ setModalOpen }: ContactHeaderProps) => {
+
+const ContactsHeader = () => {
   const router = useRouter()
   
+  const { dispatch } = useContext(ModalContext);
+
   return (
     <div id="contacts-header" className="flex justify-center">
       <button type="button" onClick={() => router.back()}>back</button>
@@ -23,7 +24,7 @@ const ContactsHeader = ({ setModalOpen }: ContactHeaderProps) => {
             <button>settings</button>
             <button>profile</button>
           </div>
-          <button onClick={() => setModalOpen(true)}>+ Add new</button>
+          <button onClick={() => dispatch({type: "ADD_CONTACT"})}>+ Add new</button>
         </div>
       </div>
       <button>light mode</button>

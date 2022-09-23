@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
+import { ModalContext } from '../state/context';
 import { ContactItem } from '../types/types';
 
 type ModalProps = {
@@ -10,12 +11,15 @@ type ModalProps = {
   contact?: ContactItem;
 };
 
-const Modal = ({ mode, modalOpen, setModalOpen, refreshData, contact={
+const Modal = ({ refreshData, contact={
   name: '',
   phone: '',
   email: '',
   avatar: 'Default.png',
 } }: ModalProps) => {
+
+  const { state, dispatch } = useContext(ModalContext);
+
   const [formData, setFormData] = useState<ContactItem | null>(contact);
 
   const [image, setImage] = useState<File | null>(null);
@@ -48,7 +52,8 @@ const Modal = ({ mode, modalOpen, setModalOpen, refreshData, contact={
   };
 
   const handleClose = () => {
-    setModalOpen(false);
+    // setModalOpen(false);
+    dispatch({type: "CLOSE_MODAL"})
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,7 +81,8 @@ const Modal = ({ mode, modalOpen, setModalOpen, refreshData, contact={
     const resetForm = event.target as HTMLFormElement;
 
     setFormData(null);
-    setModalOpen(false);
+    // setModalOpen(false);
+    dispatch({type: "CLOSE_MODAL"})
     refreshData();
     resetForm.reset();
   };
@@ -101,7 +107,7 @@ const Modal = ({ mode, modalOpen, setModalOpen, refreshData, contact={
       <div
         id="overlay"
         className={`fixed z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-60 ${
-          !modalOpen && 'hidden'
+          !state.modalOpen && 'hidden'
         }`}
         onClick={handleClose}
       ></div>
@@ -109,10 +115,10 @@ const Modal = ({ mode, modalOpen, setModalOpen, refreshData, contact={
       <div
         id="modal"
         className={`fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 bg-white rounded-md px-8 py-6 space-y-5 drop-shadow-lg ${
-          !modalOpen && 'hidden'
+          !state.modalOpen && 'hidden'
         }`}
       >
-        <h1 className="text-2xl font-semibold">{mode} Contact</h1>
+        <h1 className="text-2xl font-semibold">{state.mode} Contact</h1>
         <div className="py-5 border-t border-b border-gray-300">
           <form
             id="add-contact-form"

@@ -3,19 +3,20 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import { ContactItem } from '../types/types';
 
 type ModalProps = {
-  title: String;
+  mode: "Add" | "Edit";
   modalOpen: Boolean;
   setModalOpen: Dispatch<SetStateAction<boolean>>;
   refreshData: Function;
+  contact?: ContactItem;
 };
 
-const Modal = ({ title, modalOpen, setModalOpen, refreshData }: ModalProps) => {
-  const [formData, setFormData] = useState<ContactItem | null>({
-    name: '',
-    phone: '',
-    email: '',
-    avatar: '',
-  });
+const Modal = ({ mode, modalOpen, setModalOpen, refreshData, contact={
+  name: '',
+  phone: '',
+  email: '',
+  avatar: 'Default.png',
+} }: ModalProps) => {
+  const [formData, setFormData] = useState<ContactItem | null>(contact);
 
   const [image, setImage] = useState<File | null>(null);
   const [createObjectURL, setCreateObjectURL] = useState<Blob | string>(
@@ -36,6 +37,8 @@ const Modal = ({ title, modalOpen, setModalOpen, refreshData }: ModalProps) => {
   const uploadToServer = async () => {
     const body = new FormData();
     if (image) {
+      console.log('img uploaded');
+      
       body.append('file', image);
       const response = await fetch('/api/upload-profile-pic', {
         method: 'POST',
@@ -79,6 +82,8 @@ const Modal = ({ title, modalOpen, setModalOpen, refreshData }: ModalProps) => {
   };
 
   const saveContact = async (contact: any) => {
+    console.log(contact);
+    
     const response = await fetch('/api/contacts', {
       method: 'POST',
       body: JSON.stringify(contact),
@@ -107,7 +112,7 @@ const Modal = ({ title, modalOpen, setModalOpen, refreshData }: ModalProps) => {
           !modalOpen && 'hidden'
         }`}
       >
-        <h1 className="text-2xl font-semibold">{title}</h1>
+        <h1 className="text-2xl font-semibold">{mode} Contact</h1>
         <div className="py-5 border-t border-b border-gray-300">
           <form
             id="add-contact-form"

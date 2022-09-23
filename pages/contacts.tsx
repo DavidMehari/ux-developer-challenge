@@ -21,7 +21,7 @@ const Contacts: NextPage = ({initialContacts}: InferGetServerSidePropsType<typeo
       <ContactsHeader setModalOpen={setModalOpen}/>
       <ContactsList contacts={initialContacts} />
 
-      <Modal title="Add contact" refreshData={refreshData} modalOpen={modalOpen} setModalOpen={setModalOpen} />
+      <Modal mode="Add" refreshData={refreshData} modalOpen={modalOpen} setModalOpen={setModalOpen} />
     </>
   );
 };

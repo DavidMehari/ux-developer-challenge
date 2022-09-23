@@ -13,7 +13,7 @@ const Contacts: NextPage = () => {
       <ContactsHeader setModalOpen={setModalOpen}/>
       <ContactsList />
 
-      <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} />
+      <Modal title="Add contact" modalOpen={modalOpen} setModalOpen={setModalOpen} />
     </>
   );
 };

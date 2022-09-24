@@ -1,5 +1,7 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { Key, useContext } from "react";
+import { deleteContactById } from "../../helpers/fetchFns";
 import { ModalContext } from "../../state/context";
 import { ContactItem } from "../../types/types";
 
@@ -11,13 +13,21 @@ const ContactsListItem = ({contact}: ContactsListItemProps ) => {
 
   const { dispatch } = useContext(ModalContext);
 
+  const router = useRouter();
+
+  const refreshData = () => {
+    router.replace(router.asPath);
+  };
+
   const handleEditContact = async (contactId: Key) => {
     dispatch({type: 'EDIT_CONTACT', payload: `${contactId}`})
   }
 
   const handleDeleteContact = async (contactId: Key) => {
     console.log('DELETE', contactId);
-    
+    const result = await deleteContactById(contactId)
+    console.log(result);
+    refreshData();
   }
 
   return (

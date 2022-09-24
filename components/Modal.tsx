@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
-import { getContactById } from '../helpers/fetchFns';
+import { editContact, getContactById, saveContact } from '../helpers/fetchFns';
 import { ModalContext } from '../state/context';
 import { ContactItem } from '../types/types';
 
@@ -95,44 +95,14 @@ const Modal = ({ refreshData, contact=defaultContact }: ModalProps) => {
     const resetForm = event.target as HTMLFormElement;
 
     setFormData(defaultContact);
-    // setModalOpen(false);
+    
     dispatch({type: "CLOSE_MODAL"})
     refreshData();
     resetForm.reset();
   };
 
-  const saveContact = async (contact: any) => {
-    console.log('POST', contact);
-    
-    const response = await fetch('/api/contacts', {
-      method: 'POST',
-      body: JSON.stringify(contact),
-    });
-
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-
-    return await response.json();
-  };
   
-  const editContact = async (contact: ContactItem) => {
-    console.log('PUT', contact);
-    
-    if (!contact.id) return
-
-    const response = await fetch(`/api/contacts/${contact.id}`, {
-      method: 'PUT',
-      body: JSON.stringify(contact),
-    });
-
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-
-    return await response.json();
-  };
-
+  
   return (
     <>
       <div

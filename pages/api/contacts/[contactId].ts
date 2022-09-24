@@ -29,5 +29,15 @@ export default async function handler(
     });
     return res.status(200).json(updatedContact);
   }
+
+  if (req.method === 'DELETE') {
+    const deletedContact = await prisma.contact.delete({
+      where: {
+        id: contactId,
+      },
+    })
+
+    return res.status(200).json(deletedContact);
+  }
   return res.status(405).json({ message: 'Method not allowed' });
 }

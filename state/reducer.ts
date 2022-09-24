@@ -1,5 +1,4 @@
-import { Dispatch, ReducerAction, ReducerState } from "react";
-import { ModalAction, ModalState } from "../types/types";
+import { ModalAction, ModalState } from '../types/types';
 
 export const initialState = {
   modalOpen: false,
@@ -7,17 +6,18 @@ export const initialState = {
   contactIdToEdit: '',
 };
 
-export const modalReducer = (state: ModalState, action: ModalAction): ModalState => {
+export const modalReducer = (
+  state: ModalState,
+  action: ModalAction
+): ModalState => {
   switch (action.type) {
-    case "ADD_CONTACT":
-      console.log("----add-----");
-      
+    case 'ADD_CONTACT':
       return {
         ...state,
         modalOpen: true,
         mode: 'Add',
       };
-    case "EDIT_CONTACT": {
+    case 'EDIT_CONTACT': {
       return {
         ...state,
         modalOpen: true,
@@ -25,7 +25,7 @@ export const modalReducer = (state: ModalState, action: ModalAction): ModalState
         contactIdToEdit: action.payload!,
       };
     }
-    case "CLOSE_MODAL": {
+    case 'CLOSE_MODAL': {
       return {
         modalOpen: false,
         mode: '',

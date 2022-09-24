@@ -15,12 +15,12 @@ export type ModalState = {
 };
 
 enum ModalActionKind {
-  ADD_CONTACT = "ADD_CONTACT",
-  EDIT_CONTACT = "EDIT_CONTACT",
-  CLOSE_MODAL = "CLOSE_MODAL"
+  ADD_CONTACT = 'ADD_CONTACT',
+  EDIT_CONTACT = 'EDIT_CONTACT',
+  CLOSE_MODAL = 'CLOSE_MODAL',
 }
 
 export type ModalAction = {
   type: string;
   payload?: string;
-}
+};

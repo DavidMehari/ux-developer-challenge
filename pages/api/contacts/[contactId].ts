@@ -35,8 +35,7 @@ export default async function handler(
       where: {
         id: contactId,
       },
-    })
-
+    });
     return res.status(200).json(deletedContact);
   }
   return res.status(405).json({ message: 'Method not allowed' });

@@ -2,11 +2,10 @@ import ContactsListItem from './ContactsListItem';
 import { ContactItem } from '../../types/types';
 
 type ContactsProps = {
-  contacts: ContactItem[]
-}
+  contacts: ContactItem[];
+};
 
 const ContactsList = ({ contacts }: ContactsProps) => {
-
   return (
     <div id="contact-list" className="max-w-screen-md w-screen mx-auto">
       <ul>

@@ -3,7 +3,7 @@ import {
   InferGetServerSidePropsType,
   NextPage,
 } from 'next';
-import React, { createContext, useReducer, useState } from 'react';
+import React, { useReducer } from 'react';
 import ContactsHeader from '../components/contacts/ContactsHeader';
 import ContactsList from '../components/contacts/ContactsList';
 import Modal from '../components/Modal';
@@ -16,14 +16,7 @@ import { initialState, modalReducer } from '../state/reducer';
 const Contacts: NextPage = ({
   initialContacts,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  
-  
-
-  
-
   const [state, dispatch] = useReducer(modalReducer, initialState);
-
-  // const [modalOpen, setModalOpen] = useState(false)
 
   const router = useRouter();
 
@@ -36,10 +29,7 @@ const Contacts: NextPage = ({
       <ModalContext.Provider value={{ state, dispatch }}>
         <ContactsHeader />
         <ContactsList contacts={initialContacts} />
-
-        <Modal
-          refreshData={refreshData}
-        />
+        <Modal refreshData={refreshData} />
       </ModalContext.Provider>
     </>
   );
@@ -47,7 +37,7 @@ const Contacts: NextPage = ({
 
 export default Contacts;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const prisma = new PrismaClient();
   const contacts = await prisma.contact.findMany();
 

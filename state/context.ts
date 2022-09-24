@@ -1,6 +1,6 @@
-import { createContext } from "react";
-import { ModalAction, ModalState } from "../types/types";
-import { initialState } from "./reducer";
+import { createContext } from 'react';
+import { ModalAction, ModalState } from '../types/types';
+import { initialState } from './reducer';
 
 export const ModalContext = createContext<{
   state: ModalState;

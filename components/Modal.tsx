@@ -1,7 +1,11 @@
 import Image from 'next/image';
-import { useRouter } from 'next/router';
-import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
-import { editContact, getContactById, saveContact, uploadImageToServer } from '../helpers/fetchFns';
+import React, { useContext, useEffect, useState } from 'react';
+import {
+  editContact,
+  getContactById,
+  saveContact,
+  uploadImageToServer,
+} from '../helpers/fetchFns';
 import { ModalContext } from '../state/context';
 import { ContactItem } from '../types/types';
 
@@ -15,14 +19,12 @@ const defaultContact = {
   phone: '',
   email: '',
   avatar: 'Default.png',
-}
+};
 
-const Modal = ({ refreshData, contact=defaultContact }: ModalProps) => {
-
+const Modal = ({ refreshData, contact = defaultContact }: ModalProps) => {
   const { state, dispatch } = useContext(ModalContext);
 
   const [formData, setFormData] = useState<ContactItem>(contact);
-
   const [image, setImage] = useState<File | null>(null);
   const [createObjectURL, setCreateObjectURL] = useState<Blob | string>(
     `/images/${defaultContact.avatar}`
@@ -30,17 +32,16 @@ const Modal = ({ refreshData, contact=defaultContact }: ModalProps) => {
 
   useEffect(() => {
     if (state.mode === 'Add') {
-      setFormData(defaultContact)
-      setCreateObjectURL(`/images/${defaultContact.avatar}`)
+      setFormData(defaultContact);
+      setCreateObjectURL(`/images/${defaultContact.avatar}`);
     }
     if (state.mode === 'Edit') {
       getContactById(state.contactIdToEdit).then((response) => {
-        setFormData(response)
-        setCreateObjectURL(`/images/${response.avatar}`)
-      })
+        setFormData(response);
+        setCreateObjectURL(`/images/${response.avatar}`);
+      });
     }
-  }, [state])
-  
+  }, [state]);
 
   const uploadToClient = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -54,7 +55,7 @@ const Modal = ({ refreshData, contact=defaultContact }: ModalProps) => {
   };
 
   const handleClose = () => {
-    dispatch({type: "CLOSE_MODAL"})
+    dispatch({ type: 'CLOSE_MODAL' });
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,27 +71,23 @@ const Modal = ({ refreshData, contact=defaultContact }: ModalProps) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    console.log('form submitted');
-
     try {
       await uploadImageToServer(image);
       if (state.mode === 'Add') await saveContact(formData);
       if (state.mode === 'Edit') await editContact(formData);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
 
     const resetForm = event.target as HTMLFormElement;
 
     setFormData(defaultContact);
-    
-    dispatch({type: "CLOSE_MODAL"})
+
+    dispatch({ type: 'CLOSE_MODAL' });
     refreshData();
     resetForm.reset();
   };
 
-  
-  
   return (
     <>
       <div
@@ -134,7 +131,9 @@ const Modal = ({ refreshData, contact=defaultContact }: ModalProps) => {
                 className="border-black border"
                 htmlFor="profile"
               >
-                {createObjectURL === `/images/${defaultContact.avatar}` ? '+ Add picture' : 'Change picture'}
+                {createObjectURL === `/images/${defaultContact.avatar}`
+                  ? '+ Add picture'
+                  : 'Change picture'}
               </label>
               <button>Del</button>
             </div>

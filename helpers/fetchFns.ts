@@ -58,3 +58,16 @@ export const saveContact = async (contact: ContactItem) => {
 
   return await response.json();
 };
+
+export const uploadImageToServer = async (image: File | null) => {
+  const body = new FormData();
+  if (image) {
+    console.log('img uploaded');
+    
+    body.append('file', image);
+    const response = await fetch('/api/upload-profile-pic', {
+      method: 'POST',
+      body,
+    });
+  }
+};

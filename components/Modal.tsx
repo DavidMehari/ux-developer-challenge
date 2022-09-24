@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
-import { editContact, getContactById, saveContact } from '../helpers/fetchFns';
+import { editContact, getContactById, saveContact, uploadImageToServer } from '../helpers/fetchFns';
 import { ModalContext } from '../state/context';
 import { ContactItem } from '../types/types';
 
@@ -25,16 +25,18 @@ const Modal = ({ refreshData, contact=defaultContact }: ModalProps) => {
 
   const [image, setImage] = useState<File | null>(null);
   const [createObjectURL, setCreateObjectURL] = useState<Blob | string>(
-    '/images/Default.png'
+    `/images/${defaultContact.avatar}`
   );
 
   useEffect(() => {
     if (state.mode === 'Add') {
       setFormData(defaultContact)
+      setCreateObjectURL(`/images/${defaultContact.avatar}`)
     }
     if (state.mode === 'Edit') {
       getContactById(state.contactIdToEdit).then((response) => {
         setFormData(response)
+        setCreateObjectURL(`/images/${response.avatar}`)
       })
     }
   }, [state])
@@ -51,21 +53,7 @@ const Modal = ({ refreshData, contact=defaultContact }: ModalProps) => {
     }
   };
 
-  const uploadToServer = async () => {
-    const body = new FormData();
-    if (image) {
-      console.log('img uploaded');
-      
-      body.append('file', image);
-      const response = await fetch('/api/upload-profile-pic', {
-        method: 'POST',
-        body,
-      });
-    }
-  };
-
   const handleClose = () => {
-    // setModalOpen(false);
     dispatch({type: "CLOSE_MODAL"})
   };
 
@@ -85,7 +73,7 @@ const Modal = ({ refreshData, contact=defaultContact }: ModalProps) => {
     console.log('form submitted');
 
     try {
-      await uploadToServer();
+      await uploadImageToServer(image);
       if (state.mode === 'Add') await saveContact(formData);
       if (state.mode === 'Edit') await editContact(formData);
     } catch (error) {
@@ -146,7 +134,7 @@ const Modal = ({ refreshData, contact=defaultContact }: ModalProps) => {
                 className="border-black border"
                 htmlFor="profile"
               >
-                + Add picture
+                {createObjectURL === `/images/${defaultContact.avatar}` ? '+ Add picture' : 'Change picture'}
               </label>
               <button>Del</button>
             </div>

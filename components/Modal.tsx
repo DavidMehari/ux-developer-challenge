@@ -1,31 +1,43 @@
 import Image from 'next/image';
-import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
+import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
+import { getContactById } from '../helpers/fetchFns';
 import { ModalContext } from '../state/context';
 import { ContactItem } from '../types/types';
 
 type ModalProps = {
-  mode: "Add" | "Edit";
-  modalOpen: Boolean;
-  setModalOpen: Dispatch<SetStateAction<boolean>>;
   refreshData: Function;
   contact?: ContactItem;
 };
 
-const Modal = ({ refreshData, contact={
+const defaultContact = {
   name: '',
   phone: '',
   email: '',
   avatar: 'Default.png',
-} }: ModalProps) => {
+}
+
+const Modal = ({ refreshData }: ModalProps) => {
 
   const { state, dispatch } = useContext(ModalContext);
 
-  const [formData, setFormData] = useState<ContactItem | null>(contact);
+  const [formData, setFormData] = useState<ContactItem>(defaultContact);
 
   const [image, setImage] = useState<File | null>(null);
   const [createObjectURL, setCreateObjectURL] = useState<Blob | string>(
     '/images/Default.png'
   );
+
+  useEffect(() => {
+    if (state.mode === 'Add') {
+      setFormData(defaultContact)
+    }
+    if (state.mode === 'Edit') {
+      getContactById(state.contactIdToEdit).then((response) => {
+        setFormData(response)
+      })
+    }
+  }, [state])
+  
 
   const uploadToClient = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -73,14 +85,15 @@ const Modal = ({ refreshData, contact={
 
     try {
       await uploadToServer();
-      await saveContact(formData);
+      if (state.mode === 'Add') await saveContact(formData);
+      if (state.mode === 'Edit') await editContact(formData);
     } catch (error) {
       console.log(error);
     }
 
     const resetForm = event.target as HTMLFormElement;
 
-    setFormData(null);
+    setFormData(defaultContact);
     // setModalOpen(false);
     dispatch({type: "CLOSE_MODAL"})
     refreshData();
@@ -88,10 +101,27 @@ const Modal = ({ refreshData, contact={
   };
 
   const saveContact = async (contact: any) => {
-    console.log(contact);
+    console.log('POST', contact);
     
     const response = await fetch('/api/contacts', {
       method: 'POST',
+      body: JSON.stringify(contact),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    return await response.json();
+  };
+  
+  const editContact = async (contact: ContactItem) => {
+    console.log('PUT', contact);
+    
+    if (!contact.id) return
+
+    const response = await fetch(`/api/contacts/${contact.id}`, {
+      method: 'PUT',
       body: JSON.stringify(contact),
     });
 

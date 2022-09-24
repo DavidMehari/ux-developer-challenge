@@ -1,4 +1,7 @@
 import Image from "next/image";
+import { useContext } from "react";
+import { getContactById } from "../../helpers/fetchFns";
+import { ModalContext } from "../../state/context";
 import { ContactItem } from "../../types/types";
 
 type ContactsListItemProps = {
@@ -7,19 +10,12 @@ type ContactsListItemProps = {
 
 const ContactsListItem = ({contact}: ContactsListItemProps ) => {
 
+  const { dispatch } = useContext(ModalContext);
+
   const handleEditContact = async (contactId: any) => {
-    const contact = await getContactById(contactId)
-    console.log(contact);
-  }
-
-  const getContactById = async (contactId: any) => {
-    const response = await fetch(`/api/contacts/${contactId}`)
-    
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-
-   return await response.json()
+    // const contact = await getContactById(contactId)
+    // console.log(contact);
+    dispatch({type: 'EDIT_CONTACT', payload: contactId})
   }
 
   return (

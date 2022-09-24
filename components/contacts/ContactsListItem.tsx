@@ -1,6 +1,5 @@
 import Image from "next/image";
-import { useContext } from "react";
-import { getContactById } from "../../helpers/fetchFns";
+import { Key, useContext } from "react";
 import { ModalContext } from "../../state/context";
 import { ContactItem } from "../../types/types";
 
@@ -12,10 +11,13 @@ const ContactsListItem = ({contact}: ContactsListItemProps ) => {
 
   const { dispatch } = useContext(ModalContext);
 
-  const handleEditContact = async (contactId: any) => {
-    // const contact = await getContactById(contactId)
-    // console.log(contact);
-    dispatch({type: 'EDIT_CONTACT', payload: contactId})
+  const handleEditContact = async (contactId: Key) => {
+    dispatch({type: 'EDIT_CONTACT', payload: `${contactId}`})
+  }
+
+  const handleDeleteContact = async (contactId: Key) => {
+    console.log('DELETE', contactId);
+    
   }
 
   return (
@@ -36,9 +38,9 @@ const ContactsListItem = ({contact}: ContactsListItemProps ) => {
           <button>more</button>
         </div>
         <div id="contact-list-item-menu-dropdown-more" className="flex gap-2">
-          <button onClick={() => handleEditContact(contact.id)}>Edit</button>
+          <button onClick={() => handleEditContact(contact.id!)}>Edit</button>
           <button>Fav</button>
-          <button>Remove</button>
+          <button onClick={() => handleDeleteContact(contact.id!)}>Remove</button>
         </div>
       </div>
     </li>

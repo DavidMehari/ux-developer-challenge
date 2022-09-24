@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 import { getContactById } from '../helpers/fetchFns';
 import { ModalContext } from '../state/context';
@@ -16,11 +17,11 @@ const defaultContact = {
   avatar: 'Default.png',
 }
 
-const Modal = ({ refreshData }: ModalProps) => {
+const Modal = ({ refreshData, contact=defaultContact }: ModalProps) => {
 
   const { state, dispatch } = useContext(ModalContext);
 
-  const [formData, setFormData] = useState<ContactItem>(defaultContact);
+  const [formData, setFormData] = useState<ContactItem>(contact);
 
   const [image, setImage] = useState<File | null>(null);
   const [createObjectURL, setCreateObjectURL] = useState<Blob | string>(

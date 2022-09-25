@@ -57,7 +57,7 @@
   }
 
   .btn-primary {
-    @apply bg-grey-60 hover:bg-grey-50 active:bg-grey-40;
+    @apply bg-grey-60 hover:bg-grey-50 active:bg-grey-40 h-10;
   }
 
   .btn-secondary {

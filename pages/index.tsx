@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import AddIcon from '../asset/icons/Add.svg';
+import Button from '../components/Button';
 
 const Home: NextPage = () => {
   return (
@@ -36,6 +37,7 @@ const Home: NextPage = () => {
           <span>Add new</span>
         </div>
       </div> */}
+
     </div>
   );
 };

@@ -34,7 +34,7 @@ const ContactsListItem = ({ contact }: ContactsListItemProps) => {
   };
 
   return (
-    <li className="flex justify-between items-center h-16">
+    <li className="flex justify-between items-center h-16 group">
       <div id="contact-info" className="flex gap-4">
         
         <Image
@@ -52,7 +52,7 @@ const ContactsListItem = ({ contact }: ContactsListItemProps) => {
       </div>
 
       <div id="contact-list-item-menu">
-        <div id="contact-list-item-menu-main" className="flex gap-2">
+        <div id="contact-list-item-menu-main" className="gap-2 hidden group-hover:flex">
           <Button
               icon={MuteIcon}
               onClick={() => {}}
@@ -69,7 +69,7 @@ const ContactsListItem = ({ contact }: ContactsListItemProps) => {
               btnStyle="secondary"
             />
         </div>
-        <div id="contact-list-item-menu-dropdown-more" className="flex gap-2">
+        <div id="contact-list-item-menu-dropdown-more" className="hidden gap-2">
           {/* <button onClick={() => handleEditContact(contact.id!)}>Edit</button>
           <button>Fav</button>
           <button onClick={() => handleDeleteContact(contact.id!)}>

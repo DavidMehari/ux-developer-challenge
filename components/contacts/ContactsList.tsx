@@ -7,7 +7,7 @@ type ContactsProps = {
 
 const ContactsList = ({ contacts }: ContactsProps) => {
   return (
-    <div id="contact-list" className="max-w-screen-md w-screen mx-auto">
+    <div id="contact-list" className="max-w-screen-md w-screen mx-auto px-6 pt-3">
       <ul>
         {contacts?.map((contactItem: ContactItem) => (
           <ContactsListItem key={contactItem.id} contact={contactItem} />

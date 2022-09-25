@@ -4,6 +4,13 @@ import { Key, useContext } from 'react';
 import { deleteContactById } from '../../helpers/fetchFns';
 import { ModalContext } from '../../state/context';
 import { ContactItem } from '../../types/types';
+import Button from '../Button';
+import MuteIcon from '../../asset/icons/Mute.svg';
+import CallIcon from '../../asset/icons/Call.svg';
+import MoreIcon from '../../asset/icons/More.svg';
+import SettingsIcon from '../../asset/icons/Settings.svg';
+import FavouriteIcon from '../../asset/icons/Favourite.svg';
+import DeleteIcon from '../../asset/icons/Delete.svg';
 
 type ContactsListItemProps = {
   contact: ContactItem;
@@ -27,34 +34,65 @@ const ContactsListItem = ({ contact }: ContactsListItemProps) => {
   };
 
   return (
-    <li className="flex justify-between">
-      <div id="contact-info" className="flex gap-2">
-        <div id="contacts-avatar">
-          <Image
-            className="h-16 w-16 object-cover rounded-full"
-            src={`/images/${contact.avatar}`}
-            alt="prof"
-            width={50}
-            height={50}
-          />
-        </div>
-        <div id="contact-details">
-          <h3 className="font-bold">{contact.name}</h3>
-          <p>{contact.phone}</p>
+    <li className="flex justify-between items-center h-16">
+      <div id="contact-info" className="flex gap-4">
+        
+        <Image
+          className="h-10 w-10 object-cover rounded-full"
+          src={`/images/${contact.avatar}`}
+          alt="prof"
+          width={40}
+          height={40}
+        />
+        
+        <div id="contact-details" className='h-10'>
+          <h3>{contact.name}</h3>
+          <p className='contact-message text-secondary'>{contact.phone}</p>
         </div>
       </div>
+
       <div id="contact-list-item-menu">
         <div id="contact-list-item-menu-main" className="flex gap-2">
-          <button className="">mute</button>
-          <button>call</button>
-          <button>more</button>
+          <Button
+              icon={MuteIcon}
+              onClick={() => {}}
+              btnStyle="secondary"
+            />
+            <Button
+              icon={CallIcon}
+              onClick={() => {}}
+              btnStyle="secondary"
+            />
+            <Button
+              icon={MoreIcon}
+              onClick={() => {}}
+              btnStyle="secondary"
+            />
         </div>
         <div id="contact-list-item-menu-dropdown-more" className="flex gap-2">
-          <button onClick={() => handleEditContact(contact.id!)}>Edit</button>
+          {/* <button onClick={() => handleEditContact(contact.id!)}>Edit</button>
           <button>Fav</button>
           <button onClick={() => handleDeleteContact(contact.id!)}>
             Remove
-          </button>
+          </button> */}
+          <Button
+              icon={SettingsIcon}
+              onClick={() => handleEditContact(contact.id!)}
+              btnStyle="secondary"
+              text='Edit'
+            />
+            <Button
+              icon={FavouriteIcon}
+              onClick={() => {}}
+              btnStyle="secondary"
+              text='Favourite'
+            />
+            <Button
+              icon={DeleteIcon}
+              onClick={() => handleDeleteContact(contact.id!)}
+              btnStyle="secondary"
+              text='Remove'
+            />
         </div>
       </div>
     </li>

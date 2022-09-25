@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { MouseEventHandler } from 'react';
 
 type ButtonProps = {
-  btnStyle: 'primary' | 'secondary';
+  btnStyle: 'primary' | 'secondary' | 'special';
   onClick: MouseEventHandler<HTMLElement>;
   icon?: any;
   text?: string;

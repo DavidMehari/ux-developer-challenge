@@ -27,7 +27,7 @@
   }
   body {
     font-family: 'Lexend Deca', sans-serif;
-    @apply font-normal text-sm tracking-[0.01em] bg-grey-100 text-primary
+    @apply font-normal text-sm tracking-[0.01em] bg-grey-100 text-primary;
   }
 }
 
@@ -63,16 +63,24 @@
   .btn-secondary {
     @apply bg-grey-100 hover:bg-grey-90 active:bg-grey-80;
   }
-  
+
   .btn-icon {
-    @apply p-2 w-10 h-10 flex items-center justify-center
+    @apply p-2 w-10 h-10 flex items-center justify-center;
   }
-  
+
   .btn-icon-text {
-    @apply p-2 inline-flex flex-row items-center justify-center
+    @apply p-2 inline-flex flex-row items-center justify-center;
   }
-  
-  /* .btn-icon-text.btn-special {
-    @apply bg-grey-100 bg-gradient-to-b from-grey-60/70 to-white/10 rounded-full border border-grey-20;
-  } */
+
+  .btn-icon-text.btn-special {
+    @apply bg-grey-100
+      bg-gradient-to-b
+    from-grey-60/70
+    to-white/10 
+    border
+    rounded-full
+    border-grey-20/20
+    hover:bg-grey-90
+    active:bg-grey-80
+  }
 }

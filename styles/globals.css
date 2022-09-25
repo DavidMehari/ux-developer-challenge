@@ -2,6 +2,77 @@
 @tailwind components;
 @tailwind utilities;
 
-button {
-  border: 1px solid black;
+@font-face {
+  font-family: 'Glysa';
+  src: url('../asset/fonts/Glysa.otf');
+}
+
+@font-face {
+  font-family: 'Lexend Deca';
+  src: url('../asset/fonts/LexendDeca-VariableFont_wght.ttf');
+}
+
+@layer base {
+  h1 {
+    font-family: 'Glysa', sans-serif;
+    @apply font-medium text-[32px] leading-[48px] tracking-normal;
+  }
+  h2 {
+    font-family: 'Glysa', sans-serif;
+    @apply font-medium text-[24px] leading-[40px] tracking-normal;
+  }
+  h3 {
+    font-family: 'Lexend Deca', sans-serif;
+    @apply font-normal text-base tracking-[0.01em];
+  }
+  body {
+    font-family: 'Lexend Deca', sans-serif;
+    @apply font-normal text-sm tracking-[0.01em] bg-grey-100 text-primary
+  }
+}
+
+@layer components {
+  .contact-body {
+    font-family: 'Lexend Deca', sans-serif;
+    @apply font-normal text-sm tracking-[0.01em];
+  }
+  .contact-message {
+    font-family: 'Lexend Deca', sans-serif;
+    @apply font-normal  text-[12px] leading-[12px] tracking-[0.01em];
+  }
+
+  .text-primary {
+    @apply text-white;
+  }
+  .text-secondary {
+    @apply text-white opacity-[0.56];
+  }
+  .text-disabled {
+    @apply text-white opacity-[0.32];
+  }
+
+  .btn {
+    font-family: 'Lexend Deca', sans-serif;
+    @apply rounded-lg gap-2 py-2 px-4 h-10 text-primary text-[14px] leading-[18px];
+  }
+
+  .btn-primary {
+    @apply bg-grey-60 hover:bg-grey-50 active:bg-grey-40;
+  }
+
+  .btn-secondary {
+    @apply bg-grey-100 hover:bg-grey-90 active:bg-grey-80;
+  }
+  
+  .btn-icon {
+    @apply p-2 w-10 h-10 flex items-center justify-center
+  }
+  
+  .btn-icon-text {
+    @apply p-2 inline-flex flex-row items-center justify-center
+  }
+  
+  /* .btn-icon-text.btn-special {
+    @apply bg-grey-100 bg-gradient-to-b from-grey-60/70 to-white/10 rounded-full border border-grey-20;
+  } */
 }

@@ -45,10 +45,10 @@
     @apply text-white;
   }
   .text-secondary {
-    @apply text-white opacity-[0.56];
+    @apply text-white text-opacity-[0.56];
   }
   .text-disabled {
-    @apply text-white opacity-[0.32];
+    @apply text-white text-opacity-[0.32];
   }
 
   .btn {
@@ -69,7 +69,7 @@
   }
 
   .btn-icon-text {
-    @apply p-2 inline-flex flex-row items-center justify-center;
+    @apply py-2 pr-4 pl-3 inline-flex flex-row items-center justify-center;
   }
 
   .btn-icon-text.btn-special {

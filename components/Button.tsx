@@ -6,26 +6,27 @@ type ButtonProps = {
   onClick: MouseEventHandler<HTMLElement>;
   icon?: any;
   text?: string;
+  btnType?: "button" | "submit" | "reset";
 };
 
-const Button = ({ icon, text, onClick, btnStyle }: ButtonProps) => {
+const Button = ({ icon, text, onClick, btnStyle, btnType="button" }: ButtonProps) => {
   return (
     <>
       {icon && text && (
-        <button className={`btn btn-${btnStyle} btn-icon-text`} onClick={onClick}>
+        <button type={btnType} className={`btn btn-${btnStyle} btn-icon-text`} onClick={onClick}>
           <Image src={icon} alt="icon" />
           <span>{text}</span>
         </button>
       )}
 
       {!icon && text && (
-        <button className={`btn btn-${btnStyle}`} onClick={onClick}>
+        <button type={btnType} className={`btn btn-${btnStyle}`} onClick={onClick}>
           {text}
         </button>
       )}
 
       {icon && !text && (
-        <button className={`btn btn-${btnStyle} btn-icon`} onClick={onClick}>
+        <button type={btnType} className={`btn btn-${btnStyle} btn-icon`} onClick={onClick}>
           <Image src={icon} alt="icon" />
         </button>
       )}

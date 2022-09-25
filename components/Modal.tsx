@@ -8,6 +8,10 @@ import {
 } from '../helpers/fetchFns';
 import { ModalContext } from '../state/context';
 import { ContactItem } from '../types/types';
+import Button from './Button';
+import AddIcon from '../asset/icons/Add.svg';
+import ChangeIcon from '../asset/icons/Change.svg';
+import DeleteIcon from '../asset/icons/Delete.svg';
 
 type ModalProps = {
   refreshData: Function;
@@ -56,6 +60,7 @@ const Modal = ({ refreshData, contact = defaultContact }: ModalProps) => {
 
   const handleClose = () => {
     dispatch({ type: 'CLOSE_MODAL' });
+    setImage(null);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,7 +97,7 @@ const Modal = ({ refreshData, contact = defaultContact }: ModalProps) => {
     <>
       <div
         id="overlay"
-        className={`fixed z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-60 ${
+        className={`fixed z-40 w-screen h-screen inset-0 bg-black bg-opacity-40 ${
           !state.modalOpen && 'hidden'
         }`}
         onClick={handleClose}
@@ -100,25 +105,26 @@ const Modal = ({ refreshData, contact = defaultContact }: ModalProps) => {
 
       <div
         id="modal"
-        className={`fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 bg-white rounded-md px-8 py-6 space-y-5 drop-shadow-lg ${
+        className={`flex flex-col gap-6 fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[364px] h-[540] bg-grey-100 rounded-lg pt-6 px-6 ${
           !state.modalOpen && 'hidden'
         }`}
       >
-        <h1 className="text-2xl font-semibold">{state.mode} Contact</h1>
-        <div className="py-5 border-t border-b border-gray-300">
-          <form
-            id="add-contact-form"
-            className="space-y-6"
-            onSubmit={handleSubmit}
-          >
-            <div className="flex items-center gap-2">
-              <Image
-                src={`${createObjectURL}`}
-                alt="profile pic preview"
-                width={60}
-                height={60}
-                className="h-16 w-16 object-cover rounded-full"
-              />
+        <h2>{state.mode} contact</h2>
+
+        <form
+          id="add-contact-form"
+          className="flex flex-col gap-6"
+          onSubmit={handleSubmit}
+        >
+          <div className="flex items-center gap-4">
+            <Image
+              src={`${createObjectURL}`}
+              alt="profile pic preview"
+              width={88}
+              height={88}
+              className="h-[88px] w-[88px] object-cover rounded-full border box-border border-grey-70 "
+            />
+            <div id="profile-pic-buttons" className="flex gap-2">
               <input
                 type="file"
                 className="hidden"
@@ -128,76 +134,94 @@ const Modal = ({ refreshData, contact = defaultContact }: ModalProps) => {
               />
               <label
                 role="button"
-                className="border-black border"
+                className="btn btn-primary btn-icon-text"
                 htmlFor="profile"
               >
-                {createObjectURL === `/images/${defaultContact.avatar}`
-                  ? '+ Add picture'
-                  : 'Change picture'}
+                {createObjectURL === `/images/${defaultContact.avatar}` ? (
+                  <>
+                    <Image src={AddIcon} alt="icon" />
+                    {'Add picture'}
+                  </>
+                ) : (
+                  <>
+                    <Image src={ChangeIcon} alt="icon" />
+                    {'Change picture'}
+                  </>
+                )}
               </label>
-              <button>Del</button>
+              {
+                (createObjectURL !== `/images/${defaultContact.avatar}`) || image ?
+                <Button
+                  icon={DeleteIcon}
+                  onClick={() => {}}
+                  btnStyle="primary"
+                />
+                :
+                <></>
+              }
             </div>
+          </div>
 
-            <div>
-              <label
-                htmlFor="name"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-              >
-                Name
-              </label>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                placeholder="Jamie Wright"
-                required
-                value={formData?.name || ''}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="phone"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-              >
-                Phone number
-              </label>
-              <input
-                type="tel"
-                name="phone"
-                id="phone"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                placeholder="+01 234 5678"
-                required
-                value={formData?.phone || ''}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="email"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-              >
-                Email address
-              </label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                placeholder="jamie.wright@mail.com"
-                required
-                value={formData?.email || ''}
-                onChange={handleChange}
-              />
-            </div>
-          </form>
-        </div>
-        <div className="flex justify-end gap-2">
+          <div className='flex flex-col gap-1'>
+            <label
+              htmlFor="name"
+              className="text-secondary contact-message"
+            >
+              Name
+            </label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              className="focus:bg-grey-60 focus:border-grey-10 focus:outline-none placeholder-white/30 w-full text-primary bg-grey-80 box-border border border-grey-60 rounded-lg py-2 px-3 h-10 text-[14px] leading-[18px]"
+              placeholder="Jamie Wright"
+              required
+              value={formData?.name || ''}
+              onChange={handleChange}
+            />
+          </div>
+          <div className='flex flex-col gap-1'>
+            <label
+              htmlFor="phone"
+              className="text-secondary contact-message"
+            >
+              Phone number
+            </label>
+            <input
+              type="tel"
+              name="phone"
+              id="phone"
+              className="focus:bg-grey-60 focus:border-grey-10 focus:outline-none placeholder-white/30 w-full text-primary bg-grey-80 box-border border border-grey-60 rounded-lg py-2 px-3 h-10 text-[14px] leading-[18px]"
+              placeholder="+01 234 5678"
+              required
+              value={formData?.phone || ''}
+              onChange={handleChange}
+            />
+          </div>
+          <div className='flex flex-col gap-1'>
+            <label
+              htmlFor="email"
+              className="text-secondary contact-message"
+            >
+              Email address
+            </label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              className="focus:bg-grey-60 focus:border-grey-10 focus:outline-none placeholder-white/30 w-full text-primary bg-grey-80 box-border border border-grey-60 rounded-lg py-2 px-3 h-10 text-[14px] leading-[18px]"
+              placeholder="jamie.wright@mail.com"
+              required
+              value={formData?.email || ''}
+              onChange={handleChange}
+            />
+          </div>
+        </form>
+
+        <div className="flex justify-end gap-2 py-6">
           <button
             id="cancel"
-            className="px-5 py-2 bg-indigo-500 hover:bg-indigo-700 text-white cursor-pointer rounded-md"
+            className="btn btn-secondary"
             onClick={handleClose}
           >
             Cancel
@@ -206,10 +230,11 @@ const Modal = ({ refreshData, contact = defaultContact }: ModalProps) => {
             id="done"
             form="add-contact-form"
             type="submit"
-            className="px-5 py-2 bg-indigo-500 hover:bg-indigo-700 text-white cursor-pointer rounded-md"
+            className="btn btn-primary"
           >
             Done
           </button>
+          
         </div>
       </div>
     </>

@@ -18,7 +18,7 @@ const ContactsHeader = () => {
     <motion.div
       initial={{ y: -50, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.4}}
+      transition={{ duration: 0.4 }}
       id="contacts-header"
       className="flex justify-center items-center mt-4 mb-4 sm:mb-0 sm:mt-24 h-18 sm:h-24"
     >
@@ -30,10 +30,7 @@ const ContactsHeader = () => {
         />
       </div>
 
-      <div
-        id="contacts-headline"
-        className="max-w-screen-md w-screen flex flex-wrap sm:flex-nowrap justify-center sm:justify-between items-center px-2 sm:px-3 md:px-6 sm:mx-3 md:mx-6"
-      >
+      <div id="contacts-headline" className="contacts-headline">
         <h1 id="contacts-title" className="text-primary">
           Contacts
         </h1>

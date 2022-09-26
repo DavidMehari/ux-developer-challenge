@@ -12,6 +12,7 @@ import MoreIcon from '../../asset/icons/More.svg';
 import SettingsIcon from '../../asset/icons/Settings.svg';
 import FavouriteIcon from '../../asset/icons/Favourite.svg';
 import DeleteIcon from '../../asset/icons/Delete.svg';
+import ContactInfo from './ContactInfo';
 
 type ContactsListItemProps = {
   contact: ContactItem;
@@ -19,10 +20,9 @@ type ContactsListItemProps = {
 
 const ContactsListItem = ({ contact }: ContactsListItemProps) => {
   const { dispatch } = useContext(ModalContext);
-  const router = useRouter();
-
   const [isMoreMenuOpen, setIsMoreMenuOpen] = useState(false);
 
+  const router = useRouter();
   const refreshData = () => {
     router.replace(router.asPath);
   };
@@ -44,27 +44,18 @@ const ContactsListItem = ({ contact }: ContactsListItemProps) => {
 
   return (
     <motion.li
-      key='modal'
+      key="modal"
       initial={{ opacity: 0, x: -100 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 100 }}
       transition={{ duration: 0.4 }}
       className="flex justify-between items-center h-14 sm:h-16 group"
-      >
-      <div id="contact-info" className="flex gap-4">
-        <Image
-          className="h-10 w-10 object-cover rounded-full"
-          src={`/images/${contact.avatar}`}
-          alt="prof"
-          width={40}
-          height={40}
-        />
-
-        <div id="contact-details" className="h-10">
-          <h3>{contact.name}</h3>
-          <p className="contact-message text-secondary">{contact.phone}</p>
-        </div>
-      </div>
+    >
+      <ContactInfo
+        avatar={contact.avatar}
+        name={contact.name}
+        phone={contact.phone}
+      />
 
       <div id="contact-list-item-menu" className="relative">
         <div
@@ -95,14 +86,14 @@ const ContactsListItem = ({ contact }: ContactsListItemProps) => {
             <motion.div
               key={`moreMenuModal-${contact.id}`}
               initial={{ opacity: 0, scale: 0, x: '50%', y: '-50%' }}
-              animate={{ opacity: 1, scale: 1, x:0, y:0 }}
-              exit={{ opacity: 0, scale: 0 , x: '50%', y: '-50%'}}
+              animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
+              exit={{ opacity: 0, scale: 0, x: '50%', y: '-50%' }}
               transition={{ duration: 0.2 }}
               id="contact-list-item-menu-dropdown-more"
-              className={`flex flex-col items-start w-[219px] bg-grey-80 rounded-lg absolute right-0 top-12 z-50`}
+              className="more-menu"
             >
               <button
-                className="flex gap-3 items-center w-full py-3 px-[10px] text-sm hover:bg-grey-70 active:bg.grey-60 first:rounded-t-lg last:rounded-b-lg"
+                className="more-menu-btn"
                 onClick={() => handleEditContact(contact.id!)}
               >
                 <Image
@@ -112,10 +103,7 @@ const ContactsListItem = ({ contact }: ContactsListItemProps) => {
                 />
                 Edit
               </button>
-              <button
-                className="flex gap-3 items-center w-full py-3 px-[10px] text-sm hover:bg-grey-70 active:bg.grey-60 first:rounded-t-lg last:rounded-b-lg"
-                onClick={handleMoreMenuClose}
-              >
+              <button className="more-menu-btn" onClick={handleMoreMenuClose}>
                 <Image
                   className="opacity-[0.56] h-5 w-5"
                   src={FavouriteIcon}
@@ -124,7 +112,7 @@ const ContactsListItem = ({ contact }: ContactsListItemProps) => {
                 Favourite
               </button>
               <button
-                className="flex gap-3 items-center w-full py-3 px-[10px] text-sm hover:bg-grey-70 active:bg.grey-60 first:rounded-t-lg last:rounded-b-lg"
+                className="more-menu-btn"
                 onClick={() => handleDeleteContact(contact.id!)}
               >
                 <Image

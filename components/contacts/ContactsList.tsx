@@ -1,6 +1,6 @@
 import ContactsListItem from './ContactsListItem';
 import { ContactItem } from '../../types/types';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 
 type ContactsProps = {
   contacts: ContactItem[];
@@ -13,7 +13,7 @@ const ContactsList = ({ contacts }: ContactsProps) => {
       className="max-w-screen-md w-screen mx-auto px-6 pt-3"
     >
       <ul>
-        <AnimatePresence mode='popLayout'>
+        <AnimatePresence mode="popLayout">
           {contacts?.map((contactItem: ContactItem) => (
             <ContactsListItem key={contactItem.id} contact={contactItem} />
           ))}

@@ -29,6 +29,10 @@
     font-family: 'Lexend Deca', sans-serif;
     @apply font-normal text-sm tracking-[0.01em] bg-grey-100 text-primary;
   }
+
+  input {
+    @apply focus:bg-grey-60 focus:border-grey-10 focus:outline-none placeholder-white/30 w-full text-primary bg-grey-80 box-border border border-grey-60 rounded-lg py-2 px-3 h-10 text-[14px] leading-[18px];
+  }
 }
 
 @layer components {
@@ -55,23 +59,18 @@
     font-family: 'Lexend Deca', sans-serif;
     @apply rounded-lg gap-2 py-2 px-4 h-10 text-primary text-[14px] leading-[18px];
   }
-
   .btn-primary {
     @apply bg-grey-60 hover:bg-grey-50 active:bg-grey-40 h-10;
   }
-
   .btn-secondary {
     @apply bg-grey-100 hover:bg-grey-90 active:bg-grey-80;
   }
-
   .btn-icon {
     @apply p-2 w-10 h-10 flex items-center justify-center;
   }
-
   .btn-icon-text {
     @apply py-2 pr-4 pl-3 inline-flex flex-row items-center justify-center;
   }
-
   .btn-icon-text.btn-special {
     @apply bg-grey-100
       bg-gradient-to-b
@@ -81,6 +80,17 @@
     rounded-full
     border-grey-20/20
     hover:bg-grey-90
-    active:bg-grey-80
+    active:bg-grey-80;
+  }
+
+  .more-menu {
+    @apply flex flex-col items-start w-[219px] bg-grey-80 rounded-lg absolute right-0 top-12 z-50;
+  }
+  .more-menu-btn {
+    @apply flex gap-3 items-center w-full py-3 px-[10px] text-sm hover:bg-grey-70 active:bg-grey-60 first:rounded-t-lg last:rounded-b-lg;
+  }
+
+  .contacts-headline {
+    @apply max-w-screen-md w-screen flex flex-wrap sm:flex-nowrap justify-center sm:justify-between items-center px-2 sm:px-3 md:px-6 sm:mx-3 md:mx-6;
   }
 }

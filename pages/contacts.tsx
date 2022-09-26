@@ -4,13 +4,13 @@ import {
   NextPage,
 } from 'next';
 import React, { useReducer } from 'react';
-import ContactsHeader from '../components/contacts/ContactsHeader';
-import ContactsList from '../components/contacts/ContactsList';
-import Modal from '../components/Modal';
 import { PrismaClient } from '@prisma/client';
 import { useRouter } from 'next/router';
 import { ModalContext } from '../state/context';
 import { initialState, modalReducer } from '../state/reducer';
+import ContactsHeader from '../components/contacts/ContactsHeader';
+import ContactsList from '../components/contacts/ContactsList';
+import Modal from '../components/Modal';
 
 const Contacts: NextPage = ({
   initialContacts,
@@ -18,7 +18,6 @@ const Contacts: NextPage = ({
   const [state, dispatch] = useReducer(modalReducer, initialState);
 
   const router = useRouter();
-
   const refreshData = () => {
     router.replace(router.asPath);
   };

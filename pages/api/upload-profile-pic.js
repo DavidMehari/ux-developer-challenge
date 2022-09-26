@@ -25,5 +25,5 @@ const saveFile = async (file) => {
 export default function handler(req, res) {
   req.method === "POST"
     ? post(req, res)
-    : res.status(404).send("");
+    : res.status(405).send("Method not allowed");
 };

@@ -43,7 +43,14 @@ const ContactsListItem = ({ contact }: ContactsListItemProps) => {
   };
 
   return (
-    <li className="flex justify-between items-center h-16 group">
+    <motion.li
+      key='modal'
+      initial={{ opacity: 0, x: -100 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 100 }}
+      transition={{ duration: 0.4 }}
+      className="flex justify-between items-center h-16 group"
+      >
       <div id="contact-info" className="flex gap-4">
         <Image
           className="h-10 w-10 object-cover rounded-full"
@@ -62,7 +69,7 @@ const ContactsListItem = ({ contact }: ContactsListItemProps) => {
       <div id="contact-list-item-menu" className="relative">
         <div
           id="contact-list-item-menu-main"
-          className="gap-2 hidden group-hover:flex"
+          className="gap-2 opacity-0 flex group-hover:opacity-100 transition duration-400 ease-in-out"
         >
           <Button icon={MuteIcon} onClick={() => {}} btnStyle="secondary" />
           <Button icon={CallIcon} onClick={() => {}} btnStyle="secondary" />
@@ -149,7 +156,7 @@ const ContactsListItem = ({ contact }: ContactsListItemProps) => {
           )}
         </AnimatePresence>
       </div>
-    </li>
+    </motion.li>
   );
 };
 

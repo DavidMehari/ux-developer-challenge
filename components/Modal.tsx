@@ -101,11 +101,11 @@ const Modal = ({ refreshData, contact = defaultContact }: ModalProps) => {
     {state.modalOpen &&
     <>
       <motion.div
-      key='modal'
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.3 }}
+        key='modal'
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.3 }}
         id="modal"
         className={`flex flex-col gap-6 fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[364px] h-[540] bg-grey-100 rounded-lg pt-6 px-6
         }`}

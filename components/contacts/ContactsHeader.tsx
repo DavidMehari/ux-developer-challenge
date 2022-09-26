@@ -15,9 +15,12 @@ const ContactsHeader = () => {
   const { dispatch } = useContext(ModalContext);
 
   return (
-    <div
+    <motion.div
+      initial={{ y: -50, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.4}}
       id="contacts-header"
-      className="flex justify-center items-center mt-6 sm:mt-24 h-24 gap-2 sm:gap-12"
+      className="flex justify-center items-center mt-6 sm:mt-24 h-24"
     >
       <div className="">
         <Button
@@ -29,7 +32,7 @@ const ContactsHeader = () => {
 
       <div
         id="contacts-headline"
-        className="max-w-screen-md w-screen flex justify-between items-center"
+        className="max-w-screen-md w-screen flex justify-between items-center px-2 sm:px-3 md:px-6 sm:mx-3 md:mx-6"
       >
         <h1 id="contacts-title" className="text-primary">
           Contacts
@@ -59,7 +62,7 @@ const ContactsHeader = () => {
       </div>
 
       <Button icon={LightModeIcon} onClick={() => {}} btnStyle="secondary" />
-    </div>
+    </motion.div>
   );
 };
 

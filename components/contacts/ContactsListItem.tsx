@@ -134,24 +134,6 @@ const ContactsListItem = ({ contact }: ContactsListItemProps) => {
                 />
                 Remove
               </button>
-              {/* <Button
-              icon={SettingsIcon}
-              onClick={() => handleEditContact(contact.id!)}
-              btnStyle="secondary"
-              text='Edit'
-            />
-            <Button
-              icon={FavouriteIcon}
-              onClick={() => {}}
-              btnStyle="secondary"
-              text='Favourite'
-            />
-            <Button
-              icon={DeleteIcon}
-              onClick={() => handleDeleteContact(contact.id!)}
-              btnStyle="secondary"
-              text='Remove'
-            /> */}
             </motion.div>
           )}
         </AnimatePresence>

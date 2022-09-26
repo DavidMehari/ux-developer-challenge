@@ -203,7 +203,6 @@ const Modal = ({ refreshData, contact = defaultContact }: ModalProps) => {
               id="phone"
               className="focus:bg-grey-60 focus:border-grey-10 focus:outline-none placeholder-white/30 w-full text-primary bg-grey-80 box-border border border-grey-60 rounded-lg py-2 px-3 h-10 text-[14px] leading-[18px]"
               placeholder="+01 234 5678"
-              required
               value={formData?.phone || ''}
               onChange={handleChange}
             />
@@ -221,7 +220,6 @@ const Modal = ({ refreshData, contact = defaultContact }: ModalProps) => {
               id="email"
               className="focus:bg-grey-60 focus:border-grey-10 focus:outline-none placeholder-white/30 w-full text-primary bg-grey-80 box-border border border-grey-60 rounded-lg py-2 px-3 h-10 text-[14px] leading-[18px]"
               placeholder="jamie.wright@mail.com"
-              required
               value={formData?.email || ''}
               onChange={handleChange}
             />

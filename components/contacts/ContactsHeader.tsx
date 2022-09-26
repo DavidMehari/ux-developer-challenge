@@ -20,9 +20,9 @@ const ContactsHeader = () => {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.4}}
       id="contacts-header"
-      className="flex justify-center items-center mt-6 sm:mt-24 h-24"
+      className="flex justify-center items-center mt-4 mb-4 sm:mb-0 sm:mt-24 h-18 sm:h-24"
     >
-      <div className="">
+      <div>
         <Button
           icon={BackIcon}
           onClick={() => router.back()}
@@ -32,7 +32,7 @@ const ContactsHeader = () => {
 
       <div
         id="contacts-headline"
-        className="max-w-screen-md w-screen flex justify-between items-center px-2 sm:px-3 md:px-6 sm:mx-3 md:mx-6"
+        className="max-w-screen-md w-screen flex flex-wrap sm:flex-nowrap justify-center sm:justify-between items-center px-2 sm:px-3 md:px-6 sm:mx-3 md:mx-6"
       >
         <h1 id="contacts-title" className="text-primary">
           Contacts

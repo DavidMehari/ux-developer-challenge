@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { useContext } from 'react';
+import { motion } from 'framer-motion';
 import { ModalContext } from '../../state/context';
 import BackIcon from '../../asset/icons/BackArrow.svg';
 import LightModeIcon from '../../asset/icons/LightMode.svg';
@@ -35,11 +36,13 @@ const ContactsHeader = () => {
         </h1>
         <div id="contacts-menu-buttons" className="flex gap-6">
           <div id="secondary-btns" className="flex gap-2">
-            <Button
-              icon={SettingsIcon}
-              onClick={() => {}}
-              btnStyle="secondary"
-            />
+            <motion.div whileHover={{ rotate: 90 }}>
+              <Button
+                icon={SettingsIcon}
+                onClick={() => {}}
+                btnStyle="secondary"
+              />
+            </motion.div>
             <Button
               icon={MenuProfilePic}
               onClick={() => {}}

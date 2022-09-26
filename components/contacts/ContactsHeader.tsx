@@ -17,7 +17,7 @@ const ContactsHeader = () => {
   return (
     <div
       id="contacts-header"
-      className="flex justify-center items-center mt-24 h-24 gap-12"
+      className="flex justify-center items-center mt-6 sm:mt-24 h-24 gap-2 sm:gap-12"
     >
       <div className="">
         <Button
@@ -34,7 +34,7 @@ const ContactsHeader = () => {
         <h1 id="contacts-title" className="text-primary">
           Contacts
         </h1>
-        <div id="contacts-menu-buttons" className="flex gap-6">
+        <div id="contacts-menu-buttons" className="flex gap-2 sm:gap-6">
           <div id="secondary-btns" className="flex gap-2">
             <motion.div whileHover={{ rotate: 90 }}>
               <Button

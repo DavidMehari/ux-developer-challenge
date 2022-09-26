@@ -49,7 +49,7 @@ const ContactsListItem = ({ contact }: ContactsListItemProps) => {
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 100 }}
       transition={{ duration: 0.4 }}
-      className="flex justify-between items-center h-16 group"
+      className="flex justify-between items-center h-14 sm:h-16 group"
       >
       <div id="contact-info" className="flex gap-4">
         <Image

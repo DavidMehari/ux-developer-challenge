@@ -74,6 +74,15 @@ const Modal = ({ refreshData, contact = defaultContact }: ModalProps) => {
     }));
   };
 
+  const handleRemoveImage = () => {
+    setCreateObjectURL(`/images/${defaultContact.avatar}`);
+    setImage(null);
+    setFormData((prev: any) => ({
+      ...prev,
+      avatar: defaultContact.avatar,
+    }));
+  }
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -154,7 +163,7 @@ const Modal = ({ refreshData, contact = defaultContact }: ModalProps) => {
                 (createObjectURL !== `/images/${defaultContact.avatar}`) || image ?
                 <Button
                   icon={DeleteIcon}
-                  onClick={() => {}}
+                  onClick={handleRemoveImage}
                   btnStyle="primary"
                 />
                 :

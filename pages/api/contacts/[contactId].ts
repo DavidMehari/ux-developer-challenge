@@ -12,7 +12,7 @@ export default async function handler(
   if (req.method === 'GET') {
     const contact = await prisma.contact.findUnique({
       where: {
-        id: contactId,
+        id: contactId as string,
       },
     });
     return res.status(200).json(contact);
@@ -23,7 +23,7 @@ export default async function handler(
 
     const updatedContact = await prisma.contact.update({
       where: {
-        id: contactId,
+        id: contactId as string,
       },
       data: contactData,
     });
@@ -33,7 +33,7 @@ export default async function handler(
   if (req.method === 'DELETE') {
     const deletedContact = await prisma.contact.delete({
       where: {
-        id: contactId,
+        id: contactId as string,
       },
     });
     return res.status(200).json(deletedContact);

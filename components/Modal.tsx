@@ -6,6 +6,7 @@ import {
   saveContact,
   uploadImageToServer,
 } from '../helpers/fetchFns';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ModalContext } from '../state/context';
 import { ContactItem } from '../types/types';
 import Button from './Button';
@@ -95,18 +96,18 @@ const Modal = ({ refreshData, contact = defaultContact }: ModalProps) => {
 
   return (
     <>
-      <div
-        id="overlay"
-        className={`fixed z-40 w-screen h-screen inset-0 bg-black bg-opacity-40 ${
-          !state.modalOpen && 'hidden'
-        }`}
-        onClick={handleClose}
-      ></div>
+    <AnimatePresence>
 
-      <div
+    {state.modalOpen &&
+    <>
+      <motion.div
+      key='modal'
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
         id="modal"
-        className={`flex flex-col gap-6 fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[364px] h-[540] bg-grey-100 rounded-lg pt-6 px-6 ${
-          !state.modalOpen && 'hidden'
+        className={`flex flex-col gap-6 fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[364px] h-[540] bg-grey-100 rounded-lg pt-6 px-6
         }`}
       >
         <h2>{state.mode} contact</h2>
@@ -236,7 +237,20 @@ const Modal = ({ refreshData, contact = defaultContact }: ModalProps) => {
           </button>
           
         </div>
-      </div>
+      </motion.div>
+      <motion.div
+          key='modal-overlay'
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          id="overlay"
+          className={`fixed z-40 w-screen h-screen inset-0 bg-black bg-opacity-40`}
+          onClick={handleClose}
+        ></motion.div>
+      </>
+    }
+    </AnimatePresence>
     </>
   );
 };
